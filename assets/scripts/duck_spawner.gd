@@ -2,7 +2,7 @@ extends Spatial
 
 
 export(String, FILE) var spawn_object_path
-export(float, 0.0, 50.0) var throw_force = 10.0
+export(float, 0.0, 50.0) var throw_force = 0.5
 export(float, 0.0, 10.0) var random_rotation_force = 1.0
 export(int) var max_ducks = 10
 

@@ -160,6 +160,24 @@ func get_water_altitude(query_pos : Vector3) -> float:
 	return query_pos.y - height
 
 
+func get_water_height(query_pos : Vector3) -> Vector3:
+	if _system_img == null:
+		return query_pos
+	var position_in_aabb = query_pos - _system_aabb.position
+	var pos_2d = Vector2(position_in_aabb.x, position_in_aabb.z)
+	pos_2d = pos_2d / _system_aabb.get_longest_axis_size()
+	if pos_2d.x > 1.0 or pos_2d.x < 0.0 or pos_2d.y > 1.0 or pos_2d.y < 0.0:
+		return query_pos # TODO return ocean level / minimum water level
+	
+	pos_2d = pos_2d * _system_img.get_width()
+	var col = _system_img.get_pixelv(pos_2d)
+	if col.a == 0.0:
+		return query_pos # TODO return ocean level / minimum water level
+	# Throw a warning if the map is not baked
+	var height = col.b * _system_aabb.size.y + _system_aabb.position.y
+	return Vector3(query_pos.x, height, query_pos.z)
+
+
 # Returns the flow vector from the system flowmap
 func get_water_flow(query_pos : Vector3) -> Vector3:
 	if _system_img == null:
