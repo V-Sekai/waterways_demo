@@ -9,3 +9,7 @@ func _get_water_heights(positions):
 		var pos = node.get_water_height(p)
 		ret.append(pos)
 	return ret
+
+func _get_water_flow(positions):
+	var ret = []
+	return ret
